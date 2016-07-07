@@ -1,0 +1,4 @@
+﻿function CheckClientData()
+{
+    return true;
+}
