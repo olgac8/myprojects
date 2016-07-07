@@ -50,6 +50,9 @@ namespace WebApplication_Car
             if(!IsPostBack)
             {
                 PopulateCarCompany();
+                selectedcompany = companymodel.Keys.FirstOrDefault();
+                PopulateCarModel();
+
             }
 
         }
@@ -58,15 +61,14 @@ namespace WebApplication_Car
         protected void PopulateCarCompany()
         {
             companies = new string[companymodel.Count];
-            companymodel.Keys.CopyTo(companies, 0);
+            companymodel.Keys.CopyTo(companies, 0);           
             ddlCompany.DataSource = companies;            
             ddlCompany.DataBind();
+            //ddlCompany.Items.Insert(0, new ListItem("Please Select a Car Company", "Please Select a Car Company"));
         }
 
-
-        protected void ddlCompany_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            selectedcompany = ddlCompany.SelectedItem.Text;
+        protected void PopulateCarModel()
+        {            
             models = new string[companymodel.Count];
             foreach (KeyValuePair<string, string[]> item in companymodel)
             {
@@ -74,11 +76,30 @@ namespace WebApplication_Car
                 {
                     models = item.Value;
                 }
-
             }
-
             ddlModel.DataSource = models;
             ddlModel.DataBind();
+            
+        }
+        
+
+        protected void ddlCompany_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedcompany = ddlCompany.SelectedItem.Text;
+            PopulateCarModel();
+            //models = new string[companymodel.Count];
+            //foreach (KeyValuePair<string, string[]> item in companymodel)
+            //{
+            //    if (item.Key == selectedcompany)
+            //    {
+            //        models = item.Value;
+            //    }
+
+            //}
+
+            //ddlModel.DataSource = models;
+            //ddlModel.DataBind();
+            //ddlModel.Enabled = true;
         }
 
 
